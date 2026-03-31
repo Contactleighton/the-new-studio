@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Producer Workbook — The New Studio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --cream: #F4EFE6;
+      --gold: #B8892A;
+      --gold-light: #D4AA60;
+      --charcoal: #1A1A1A;
+      --mid: #5A5550;
+      --rule: #C8A96E;
+    }
+
+    body {
+      background: var(--cream);
+      font-family: 'DM Sans', sans-serif;
+      color: var(--charcoal);
+      min-height: 100vh;
+    }
+
+    .page {
+      max-width: 780px;
+      margin: 0 auto;
+      padding: 72px 48px 120px;
+    }
+
+    /* ── HEADER ── */
+    .header { margin-bottom: 40px; }
+
+    .title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(48px, 8vw, 72px);
+      font-weight: 700;
+      line-height: 1.05;
+      letter-spacing: -0.02em;
+      color: var(--charcoal);
+    }
+
+    .subtitle {
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-top: 10px;
+    }
+
+    .gold-rule {
+      border: none;
+      border-top: 1.5px solid var(--rule);
+      margin: 24px 0;
+    }
+
+    .tagline {
+      font-style: italic;
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--mid);
+      line-height: 1.6;
+    }
+
+    /* ── TWO-COLUMN FIELDS ── */
+    .field-grid {
+      display: grid;
+      grid-template-columns: 220px 1fr;
+      row-gap: 0;
+      margin: 32px 0;
+    }
+
+    .field-row {
+      display: contents;
+    }
+
+    .field-label {
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--charcoal);
+      padding: 18px 0;
+      border-bottom: 1px solid #D8CFBE;
+      display: flex;
+      align-items: center;
+    }
+
+    .field-input-wrap {
+      border-bottom: 1px solid #D8CFBE;
+      padding: 10px 0 10px 16px;
+    }
+
+    .field-input-wrap input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 15px;
+      font-weight: 300;
+      color: var(--charcoal);
+      padding: 6px 0;
+      line-height: 1.5;
+      caret-color: var(--gold);
+    }
+
+    .field-input-wrap input::placeholder { color: #B0A598; font-style: italic; }
+
+    /* ── SECTION HEADING ── */
+    .section-heading {
+      font-family: 'Playfair Display', serif;
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--charcoal);
+      margin: 48px 0 28px;
+    }
+
+    /* ── QUESTION BLOCK ── */
+    .q-block { margin-bottom: 40px; }
+
+    .q-label {
+      font-size: 10.5px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 8px;
+    }
+
+    .q-title {
+      font-size: 16px;
+      font-weight: 500;
+      color: var(--charcoal);
+      margin-bottom: 14px;
+      line-height: 1.4;
+    }
+
+    .q-desc {
+      font-size: 13.5px;
+      font-style: italic;
+      font-weight: 300;
+      color: var(--mid);
+      margin-bottom: 16px;
+      line-height: 1.6;
+    }
+
+    /* ── UNDERLINE INPUT ── */
+    .u-input {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid #C8BFB0;
+      outline: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--charcoal);
+      padding: 12px 4px 12px;
+      line-height: 1.5;
+      caret-color: var(--gold);
+      display: block;
+      transition: border-color 0.2s;
+    }
+
+    .u-input:focus { border-bottom-color: var(--gold); }
+    .u-input::placeholder { color: #B8AD9F; font-style: italic; }
+
+    /* ── NUMBERED LIST ── */
+    .numbered-list { display: flex; flex-direction: column; gap: 0; }
+
+    .numbered-row {
+      display: grid;
+      grid-template-columns: 28px 1fr;
+      align-items: end;
+      border-bottom: 1px solid #C8BFB0;
+      transition: border-color 0.2s;
+    }
+
+    .numbered-row:focus-within { border-bottom-color: var(--gold); }
+
+    .num {
+      font-size: 14px;
+      font-weight: 300;
+      color: var(--mid);
+      padding-bottom: 13px;
+      line-height: 1;
+    }
+
+    .numbered-row input {
+      background: transparent;
+      border: none;
+      outline: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 16px;
+      font-weight: 300;
+      color: var(--charcoal);
+      padding: 13px 4px 13px;
+      width: 100%;
+      caret-color: var(--gold);
+    }
+
+    .numbered-row input::placeholder { color: #B8AD9F; font-style: italic; }
+
+    /* gap between numbered rows */
+    .numbered-list .numbered-row + .numbered-row { margin-top: 2px; }
+
+    /* ── TEXTAREA ── */
+    textarea.u-input {
+      resize: none;
+      min-height: 80px;
+      overflow: hidden;
+    }
+
+    /* ── SECTION DIVIDER ── */
+    .section-rule {
+      border: none;
+      border-top: 1px solid #D0C4B0;
+      margin: 40px 0;
+    }
+
+    /* ── SUBMIT ── */
+    .submit-wrap {
+      margin-top: 64px;
+      padding-top: 40px;
+      border-top: 1.5px solid var(--rule);
+    }
+
+    .submit-btn {
+      background: var(--gold);
+      color: white;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 18px 48px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .submit-btn:hover { background: #9A7220; }
+
+    @media (max-width: 600px) {
+      .page { padding: 48px 24px 80px; }
+      .field-grid { grid-template-columns: 1fr; }
+      .field-label { border-bottom: none; padding-bottom: 4px; padding-top: 20px; }
+      .field-input-wrap { padding-left: 0; }
+    }
+
+    @media print {
+      .submit-wrap { display: none; }
+      body { background: white; }
+      .page { padding: 40px; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <div class="header">
+    <h1 class="title">Producer<br>Workbook</h1>
+    <p class="subtitle">The New Studio</p>
+  </div>
+
+  <hr class="gold-rule">
+  <p class="tagline">Keep this open while you watch. Fill it out as you go.</p>
+  <hr class="gold-rule" style="margin-top:28px;">
+
+  <!-- BASIC INFO GRID -->
+  <div class="field-grid">
+    <div class="field-row">
+      <div class="field-label">Name</div>
+      <div class="field-input-wrap"><input type="text" placeholder="Your name"></div>
+    </div>
+    <div class="field-row">
+      <div class="field-label">Start Date</div>
+      <div class="field-input-wrap"><input type="text" placeholder="e.g. April 1, 2026"></div>
+    </div>
+    <div class="field-row">
+      <div class="field-label">Target Monthly Income</div>
+      <div class="field-input-wrap"><input type="text" placeholder="e.g. $5,000/mo"></div>
+    </div>
+  </div>
+
+  <hr class="gold-rule">
+
+  <!-- ── PLAYBOOK 1 ── -->
+  <h2 class="section-heading">PLAYBOOK 1 — Niche, Outcome &amp; Offer</h2>
+
+  <!-- YOUR NICHE -->
+  <div class="q-block">
+    <div class="q-label">Your Niche</div>
+    <div class="q-title">The type of artist I want to work with:</div>
+    <input class="u-input" type="text" placeholder="e.g. Independent R&B artists with 10k–100k followers">
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- THEIR OUTCOME -->
+  <div class="q-block">
+    <div class="q-label">Their Outcome</div>
+    <div class="q-title">The 3 main things these artists want most:</div>
+    <div class="numbered-list">
+      <div class="numbered-row"><div class="num">1.</div><input type="text" placeholder=""></div>
+      <div class="numbered-row"><div class="num">2.</div><input type="text" placeholder=""></div>
+      <div class="numbered-row"><div class="num">3.</div><input type="text" placeholder=""></div>
+    </div>
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- YOUR OFFER -->
+  <div class="q-block">
+    <div class="q-label">Your Offer</div>
+    <div class="q-desc">Write 3 versions. Who you work with + how you help + the result. Clear beats clever.</div>
+    <div class="numbered-list">
+      <div class="numbered-row"><div class="num">1.</div><input type="text" placeholder="Who you work with + how you help + the result"></div>
+      <div class="numbered-row"><div class="num">2.</div><input type="text" placeholder=""></div>
+      <div class="numbered-row"><div class="num">3.</div><input type="text" placeholder=""></div>
+    </div>
+  </div>
+
+  <div class="q-block" style="margin-top:28px;">
+    <div class="q-label">The offer I'm going with</div>
+    <input class="u-input" type="text" placeholder="">
+  </div>
+
+  <hr class="gold-rule">
+
+  <!-- ── PLAYBOOK 1 CONTINUED ── -->
+  <h2 class="section-heading">PLAYBOOK 1 (CONTINUED) — Price &amp; Profile</h2>
+
+  <!-- PRICE -->
+  <div class="q-block">
+    <div class="q-label">My Monthly Price</div>
+    <input class="u-input" type="text" placeholder="$">
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- BIO -->
+  <div class="q-block">
+    <div class="q-label">Bio</div>
+    <div class="q-title">Headline ideas:</div>
+    <div class="numbered-list">
+      <div class="numbered-row"><div class="num">1.</div><input type="text" placeholder=""></div>
+      <div class="numbered-row"><div class="num">2.</div><input type="text" placeholder=""></div>
+      <div class="numbered-row"><div class="num">3.</div><input type="text" placeholder=""></div>
+    </div>
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- HIGHLIGHTS -->
+  <div class="q-block">
+    <div class="q-label">Highlights</div>
+    <div class="numbered-list">
+      <div class="numbered-row"><div class="num">1.</div><input type="text" placeholder=""></div>
+      <div class="numbered-row"><div class="num">2.</div><input type="text" placeholder=""></div>
+      <div class="numbered-row"><div class="num">3.</div><input type="text" placeholder=""></div>
+      <div class="numbered-row"><div class="num">4.</div><input type="text" placeholder=""></div>
+      <div class="numbered-row"><div class="num">5.</div><input type="text" placeholder=""></div>
+    </div>
+  </div>
+
+  <hr class="section-rule">
+
+  <!-- PINNED POSTS -->
+  <div class="q-block">
+    <div class="q-label">Pinned Posts</div>
+    <div class="numbered-list">
+      <div class="numbered-row"><div class="num">1.</div><input type="text" placeholder=""></div>
+      <div class="numbered-row"><div class="num">2.</div><input type="text" placeholder=""></div>
+      <div class="numbered-row"><div class="num">3.</div><input type="text" placeholder=""></div>
+    </div>
+  </div>
+
+  <hr class="gold-rule">
+
+  <!-- ── PLAYBOOK 2 ── -->
+  <h2 class="section-heading">PLAYBOOK 2 — Build Your Funnel</h2>
+
+  <!-- HEADLINE -->
+  <div class="q-block">
+    <div class="q-label">Headline</div>
+    <div class="q-desc">Write a few options. Clear beats clever with cold traffic.</div>
+    <div class="numbered-list">
+      <div class="numbered-row"><div class="num">1.</div><input type="text" placeholder=""></div>
+      <div class="numbered-row"><div class="num">2.</div><input type="text" placeholder=""></div>
+      <div class="numbered-row"><div class="num">3.</div><input type="text" placeholder=""></div>
+    </div>
+  </div>
+
+  <div class="q-block" style="margin-top:28px;">
+    <div class="q-label">The headline I'm going with</div>
+    <input class="u-input" type="text" placeholder="">
+  </div>
+
+  <!-- SUBMIT -->
+  <div class="submit-wrap">
+    <button class="submit-btn" onclick="window.print()">Save / Print &rarr;</button>
+  </div>
+
+</div>
+
+<script>
+  // Auto-expand textareas
+  document.querySelectorAll('textarea.u-input').forEach(ta => {
+    ta.addEventListener('input', function() {
+      this.style.height = 'auto';
+      this.style.height = this.scrollHeight + 'px';
+    });
+  });
+</script>
+</body>
+</html>
