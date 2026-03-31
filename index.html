@@ -1,0 +1,803 @@
+<!DOCTYPE html>
+<!-- saved from url=(0063)file:///Users/leightonantelman/Downloads/your-new-studio_4.html -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The New Studio</title>
+<link href="./The New Studio_files/css2" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F7F4EF;
+    --white: #FDFCFA;
+    --gold: #C8922A;
+    --gold-pale: #F5E6C8;
+    --charcoal: #1C1C1C;
+    --mid: #6B6460;
+    --border: #E8E2D9;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    min-height: 100vh;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    background: rgba(247, 244, 239, 0.93);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    z-index: 100;
+    padding: 0 48px;
+    height: 64px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 500;
+    color: var(--charcoal);
+    cursor: pointer;
+  }
+  .nav-logo span { color: var(--gold); }
+
+  .nav-back {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--mid);
+    cursor: pointer;
+    background: none;
+    border: none;
+    transition: color 0.15s;
+  }
+  .nav-back:hover { color: var(--charcoal); }
+  .nav-back svg { width: 14px; height: 14px; }
+
+  /* PAGES */
+  .page { display: none; }
+  .page.active { display: block; }
+
+  /* HOME */
+  .hero {
+    padding: 140px 48px 40px;
+    max-width: 1100px;
+    margin: 0 auto;
+    animation: fadeUp 0.55s ease both;
+  }
+
+  .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 22px;
+  }
+  .eyebrow::before {
+    content: '';
+    display: block;
+    width: 22px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(40px, 6vw, 70px);
+    font-weight: 400;
+    line-height: 1.1;
+    max-width: 680px;
+    margin-bottom: 22px;
+  }
+  .hero h1 em { font-style: italic; color: var(--gold); }
+
+  .hero-sub {
+    font-size: 17px;
+    color: var(--mid);
+    font-weight: 300;
+    line-height: 1.75;
+    max-width: 500px;
+  }
+
+  /* INTRO VIDEO */
+  .intro-video-wrap {
+    position: relative;
+    padding-top: 52.5%;
+    background: #111;
+    width: 100%;
+    margin-top: 40px;
+  }
+
+  .intro-video-wrap iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  /* EPISODES GRID */
+  .modules-section {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 60px 48px 80px;
+    animation: fadeUp 0.55s 0.1s ease both;
+  }
+
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 28px;
+  }
+
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 25px;
+    font-weight: 400;
+  }
+
+  .section-count { font-size: 13px; color: var(--mid); }
+
+  .modules-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 2px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .module-card {
+    background: var(--white);
+    padding: 28px;
+    cursor: pointer;
+    transition: background 0.15s;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+  }
+  .module-card:hover { background: #FEFAF3; }
+
+  .module-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+
+  .module-num {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--gold);
+  }
+
+  .module-duration { font-size: 12px; color: var(--mid); }
+
+  .module-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px;
+    font-weight: 400;
+    line-height: 1.35;
+  }
+
+  .module-desc {
+    font-size: 13.5px;
+    color: var(--mid);
+    font-weight: 300;
+    line-height: 1.65;
+  }
+
+  .watch-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--gold);
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    transition: gap 0.2s;
+  }
+  .watch-btn:hover { gap: 10px; }
+
+  /* FOOTER */
+  footer {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 28px 48px;
+    border-top: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .footer-logo { font-family: 'Playfair Display', serif; font-size: 15px; color: var(--mid); }
+  .footer-logo span { color: var(--gold); }
+  .footer-note { font-size: 12px; color: #B0A9A0; }
+
+  /* LESSON PAGE */
+  #lessonPage { animation: fadeUp 0.4s ease both; }
+
+  .lesson-video-wrap {
+    width: 100%;
+    background: #111;
+    position: relative;
+    padding-top: 52.5%;
+    margin-top: 64px;
+  }
+
+  .lesson-video-wrap iframe {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  .video-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 14px;
+  }
+
+  .play-ring {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    border: 1.5px solid rgba(255,255,255,0.18);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .video-placeholder p {
+    font-size: 13px;
+    color: rgba(255,255,255,0.3);
+  }
+
+  .lesson-body {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 52px 48px 80px;
+  }
+
+  .lesson-eyebrow {
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .lesson-eyebrow::before {
+    content: '';
+    display: block;
+    width: 20px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .lesson-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 4vw, 40px);
+    font-weight: 400;
+    line-height: 1.2;
+    margin-bottom: 20px;
+  }
+
+  .lesson-divider {
+    width: 100%;
+    height: 1px;
+    background: var(--border);
+    margin: 24px 0;
+  }
+
+  .lesson-desc {
+    font-size: 16px;
+    color: var(--mid);
+    font-weight: 300;
+    line-height: 1.8;
+    margin-bottom: 32px;
+  }
+
+  /* ACTION ITEMS */
+  .action-items {
+    background: var(--gold-pale);
+    border-left: 3px solid var(--gold);
+    border-radius: 0 6px 6px 0;
+    padding: 20px 24px;
+    margin-bottom: 40px;
+  }
+
+  .action-items-label {
+    font-size: 10px;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 12px;
+  }
+
+  .action-items ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .action-items ul li {
+    font-size: 14px;
+    color: var(--charcoal);
+    font-weight: 400;
+    line-height: 1.5;
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .action-items ul li::before {
+    content: '';
+    display: block;
+    width: 16px;
+    height: 16px;
+    min-width: 16px;
+    border: 1.5px solid var(--gold);
+    border-radius: 3px;
+    margin-top: 1px;
+  }
+
+  .lesson-nav {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 28px;
+    border-top: 1px solid var(--border);
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+
+  .lesson-nav-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--charcoal);
+    background: none;
+    border: 1px solid var(--border);
+    padding: 10px 18px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: border-color 0.15s, color 0.15s;
+  }
+  .lesson-nav-btn:hover { border-color: var(--gold); color: var(--gold); }
+  .lesson-nav-btn:disabled { opacity: 0.3; cursor: default; pointer-events: none; }
+
+  .lesson-nav-btn.primary {
+    background: var(--gold);
+    border-color: var(--gold);
+    color: white;
+  }
+  .lesson-nav-btn.primary:hover { background: #B07B20; border-color: #B07B20; color: white; }
+
+  .all-link {
+    font-size: 13px;
+    color: var(--mid);
+    cursor: pointer;
+    background: none;
+    border: none;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+  .all-link:hover { color: var(--charcoal); }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @media (max-width: 640px) {
+    nav { padding: 0 20px; }
+    .hero, .modules-section { padding-left: 20px; padding-right: 20px; }
+    .modules-grid { grid-template-columns: 1fr; }
+    footer { padding: 24px 20px; flex-direction: column; gap: 8px; text-align: center; }
+    .lesson-body { padding: 36px 20px 60px; }
+    .lesson-video-wrap { padding-top: 56.25%; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo" onclick="showHome()">The New <span>Studio</span></div>
+  <button class="nav-back" id="navBack" onclick="showHome()">
+    <svg viewBox="0 0 14 14" fill="none">
+      <path d="M9 2L4 7l5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+    </svg>
+    All Episodes
+  </button>
+</nav>
+
+<!-- HOME -->
+<div class="page active" id="homePage">
+  <section class="hero">
+    <div class="eyebrow">The Program</div>
+    <h1>Same skill.<br><em>Different model.</em></h1>
+    <p class="hero-sub">Everything I changed to go from chasing clients to turning them away, built into a framework you can run from anywhere.</p>
+  </section>
+
+  <div class="intro-video-wrap">
+    <iframe src="./The New Studio_files/iframe.html" loading="lazy" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen="true"></iframe>
+  </div>
+
+  <section class="modules-section">
+    <div class="section-header">
+      <h2 class="section-title">Episodes</h2>
+      <span class="section-count">8 episodes</span>
+    </div>
+    <div class="modules-grid" id="modulesGrid">
+    <div class="module-card" onclick="showLesson(0)">
+      <div class="module-top">
+        <span class="module-num">Episode 01</span>
+        <span class="module-duration">6 min</span>
+      </div>
+      <div class="module-title">Niche, Outcome &amp; Offer</div>
+      <div class="module-desc">Start here. You're picking the type of artist you want to work with. Then we define what those artists actually want (aka it's not plugins) and turn it into a one-sentence offer that's clear enough to build everything else around.</div>
+      <button class="watch-btn">
+        Watch episode
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <path d="M2 6.5h9M6.5 2l4.5 4.5L6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+    </div>
+  
+    <div class="module-card" onclick="showLesson(1)">
+      <div class="module-top">
+        <span class="module-num">Episode 02</span>
+        <span class="module-duration">5 min</span>
+      </div>
+      <div class="module-title">Set Your Price</div>
+      <div class="module-desc">The reason this whole model works. There's a sweet spot that keeps artists paying and keeps you from burning out. We'll figure out your number right here.</div>
+      <button class="watch-btn">
+        Watch episode
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <path d="M2 6.5h9M6.5 2l4.5 4.5L6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+    </div>
+  
+    <div class="module-card" onclick="showLesson(2)">
+      <div class="module-top">
+        <span class="module-num">Episode 03</span>
+        <span class="module-duration">4 min</span>
+      </div>
+      <div class="module-title">Stripe Setup</div>
+      <div class="module-desc">Dollar bills. A simple way to get paid. This one's quick. Set up Stripe, create your payment link. Text it to yourself to test it.</div>
+      <button class="watch-btn">
+        Watch episode
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <path d="M2 6.5h9M6.5 2l4.5 4.5L6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+    </div>
+  
+    <div class="module-card" onclick="showLesson(3)">
+      <div class="module-top">
+        <span class="module-num">Episode 04</span>
+        <span class="module-duration">6 min</span>
+      </div>
+      <div class="module-title">Profile Clarity</div>
+      <div class="module-desc">Before you run a single ad, your profile needs to make sense. When someone clicks your page they should get it in five seconds. What you do, who it's for, and where to go next.</div>
+      <button class="watch-btn">
+        Watch episode
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <path d="M2 6.5h9M6.5 2l4.5 4.5L6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+    </div>
+  
+    <div class="module-card" onclick="showLesson(4)">
+      <div class="module-top">
+        <span class="module-num">Episode 05</span>
+        <span class="module-duration">6 min</span>
+      </div>
+      <div class="module-title">Funnel Walkthrough</div>
+      <div class="module-desc">Your offer makes sense, your price makes sense, your profile makes sense, Stripe is set up. Now we build the page your ads send people to. I already built the layout. You're just dropping your stuff in.</div>
+      <button class="watch-btn">
+        Watch episode
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <path d="M2 6.5h9M6.5 2l4.5 4.5L6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+    </div>
+  
+    <div class="module-card" onclick="showLesson(5)">
+      <div class="module-top">
+        <span class="module-num">Episode 06</span>
+        <span class="module-duration">5 min</span>
+      </div>
+      <div class="module-title">Write Your Headline</div>
+      <div class="module-desc">The first thing people see on your page. It needs to be clear immediately. Who it's for and what you help them do. We're writing a few options and picking one. You can be creative but clear beats clever with cold traffic.</div>
+      <button class="watch-btn">
+        Watch episode
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <path d="M2 6.5h9M6.5 2l4.5 4.5L6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+    </div>
+  
+    <div class="module-card" onclick="showLesson(6)">
+      <div class="module-top">
+        <span class="module-num">Episode 07</span>
+        <span class="module-duration">4 min</span>
+      </div>
+      <div class="module-title">Offer Video, Prompt &amp; Go</div>
+      <div class="module-desc">Drop the prompt, follow the questions, answer honest and interestingly. This one's designed to get you into action, not thinking about it.</div>
+      <button class="watch-btn">
+        Watch episode
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <path d="M2 6.5h9M6.5 2l4.5 4.5L6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+    </div>
+  
+    <div class="module-card" onclick="showLesson(7)">
+      <div class="module-top">
+        <span class="module-num">Episode 08</span>
+        <span class="module-duration">6 min</span>
+      </div>
+      <div class="module-title">Intro to GHL</div>
+      <div class="module-desc">This is where your landing page, questionnaire, call booking, emails, and texts all live. My good friend Jacob recorded a full step-by-step walkthrough. Follow that video, pause and plug in what he says, get up and running fast.</div>
+      <button class="watch-btn">
+        Watch episode
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <path d="M2 6.5h9M6.5 2l4.5 4.5L6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+  </section>
+
+  <footer>
+    <div class="footer-logo">The New <span>Studio</span></div>
+    <div class="footer-note">© 2026 · All rights reserved</div>
+  </footer>
+</div>
+
+<!-- LESSON -->
+<div class="page" id="lessonPage">
+  <div class="lesson-video-wrap" id="lessonVideoWrap"></div>
+  <div class="lesson-body">
+    <div class="lesson-eyebrow" id="lessonEyebrow"></div>
+    <h1 class="lesson-title" id="lessonTitle"></h1>
+    <div class="lesson-divider"></div>
+    <p class="lesson-desc" id="lessonDesc"></p>
+    <div class="action-items" id="lessonActions" style="display:none;">
+      <div class="action-items-label">Action Items</div>
+      <ul id="lessonActionsList"></ul>
+    </div>
+    <div class="lesson-nav">
+      <button class="lesson-nav-btn" id="prevBtn" onclick="navigateLesson(-1)">
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <path d="M8.5 1.5L4 6.5l4.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+        Previous
+      </button>
+      <button class="all-link" onclick="showHome()">View all episodes</button>
+      <button class="lesson-nav-btn primary" id="nextBtn" onclick="navigateLesson(1)">
+        Next Episode
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <path d="M4.5 1.5L9 6.5l-4.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</div>
+
+<script>
+const modules = [
+  {
+    num: "01",
+    title: "Niche, Outcome & Offer",
+    desc: "Start here. You're picking the type of artist you want to work with. Then we define what those artists actually want (aka it's not plugins) and turn it into a one-sentence offer that's clear enough to build everything else around.",
+    duration: "6 min",
+    actions: [
+      "Open your guide",
+      "Write the genre and type of artist you want to work with",
+      "List the 3 main things those artists want most",
+      "Write 3 versions of your offer and pick your favorite"
+    ],
+    video: "https://customer-n6h9ol7eabjbimcd.cloudflarestream.com/83222ada8b5a6080ee596311099864a1/iframe?poster=https%3A%2F%2Fcustomer-n6h9ol7eabjbimcd.cloudflarestream.com%2F83222ada8b5a6080ee596311099864a1%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+  },
+  {
+    num: "02",
+    title: "Set Your Price",
+    desc: "The reason this whole model works. There's a sweet spot that keeps artists paying and keeps you from burning out. We'll figure out your number right here.",
+    duration: "5 min",
+    actions: [
+      "Write your monthly price in your guide",
+      "Decide on your mix and master rate or who you'll outsource to"
+    ],
+    video: "https://customer-n6h9ol7eabjbimcd.cloudflarestream.com/ec017f119dd78f72dfde21268dcf0dd7/iframe?poster=https%3A%2F%2Fcustomer-n6h9ol7eabjbimcd.cloudflarestream.com%2Fec017f119dd78f72dfde21268dcf0dd7%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+  },
+  {
+    num: "03",
+    title: "Stripe Setup",
+    desc: "Dollar bills. A simple way to get paid. This one's quick. Set up Stripe, create your payment link. Text it to yourself to test it.",
+    duration: "4 min",
+    actions: [
+      "Create your Stripe account",
+      "Build a payment link for your monthly price",
+      "Text the link to yourself and make sure it works"
+    ],
+    video: "https://customer-n6h9ol7eabjbimcd.cloudflarestream.com/76893cb49c96ef12589fd6ddc7f1ae5a/iframe?poster=https%3A%2F%2Fcustomer-n6h9ol7eabjbimcd.cloudflarestream.com%2F76893cb49c96ef12589fd6ddc7f1ae5a%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+  },
+  {
+    num: "04",
+    title: "Profile Clarity",
+    desc: "Before you run a single ad, your profile needs to make sense. When someone clicks your page they should get it in five seconds. What you do, who it's for, and where to go next.",
+    duration: "6 min",
+    actions: [
+      "Write 3 bio headline ideas in your guide",
+      "Plan out 3 to 5 highlight ideas you can put together",
+      "Write a few pinned post ideas, pin anything you already have"
+    ],
+    video: "https://customer-n6h9ol7eabjbimcd.cloudflarestream.com/e619e633e75d8d07eec1c823a8cfa5ab/iframe?poster=https%3A%2F%2Fcustomer-n6h9ol7eabjbimcd.cloudflarestream.com%2Fe619e633e75d8d07eec1c823a8cfa5ab%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+  },
+  {
+    num: "05",
+    title: "Funnel Walkthrough",
+    desc: "Your offer makes sense, your price makes sense, your profile makes sense, Stripe is set up. Now we build the page your ads send people to. I already built the layout. You're just dropping your stuff in.",
+    duration: "6 min",
+    actions: [
+      "Write 2 to 3 headline options in your guide",
+      "Pick your favorite one and jot it down"
+    ],
+    video: "https://customer-n6h9ol7eabjbimcd.cloudflarestream.com/b92b9a67b5cb44fb3059c3f783b62d66/iframe?poster=https%3A%2F%2Fcustomer-n6h9ol7eabjbimcd.cloudflarestream.com%2Fb92b9a67b5cb44fb3059c3f783b62d66%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+  },
+  {
+    num: "06",
+    title: "Write Your Headline",
+    desc: "The first thing people see on your page. It needs to be clear immediately. Who it's for and what you help them do. We're writing a few options and picking one. You can be creative but clear beats clever with cold traffic.",
+    duration: "5 min",
+    actions: [
+      "Write 2 to 3 headline options in your guide",
+      "Pick the one that feels the best to you"
+    ],
+    video: "https://customer-n6h9ol7eabjbimcd.cloudflarestream.com/a2c91a759c69d2bcbe84f129555f2d9f/iframe?poster=https%3A%2F%2Fcustomer-n6h9ol7eabjbimcd.cloudflarestream.com%2Fa2c91a759c69d2bcbe84f129555f2d9f%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+  },
+  {
+    num: "07",
+    title: "Offer Video, Prompt & Go",
+    desc: "Drop the prompt, follow the questions, answer honest and interestingly. This one's designed to get you into action, not thinking about it.",
+    duration: "4 min",
+    actions: [
+      "Copy the prompt from this episode",
+      "Drop it into Claude and answer every question",
+      "Take the output and make it as interesting and YOU as possible"
+    ],
+    video: "https://customer-n6h9ol7eabjbimcd.cloudflarestream.com/8e088c152d724a4471f4933a662fbc35/iframe?poster=https%3A%2F%2Fcustomer-n6h9ol7eabjbimcd.cloudflarestream.com%2F8e088c152d724a4471f4933a662fbc35%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+  },
+  {
+    num: "08",
+    title: "Intro to GHL",
+    desc: "This is where your landing page, questionnaire, call booking, emails, and texts all live. My good friend Jacob recorded a full step-by-step walkthrough. Follow that video, pause and plug in what he says, get up and running fast.",
+    duration: "6 min",
+    actions: [
+      "Watch Jacob's walkthrough slowly and plug in as he goes. This is the main brain — it will take some time."
+    ],
+    video: "https://customer-n6h9ol7eabjbimcd.cloudflarestream.com/961fcee29f97ec6a93beb891483261ec/iframe?poster=https%3A%2F%2Fcustomer-n6h9ol7eabjbimcd.cloudflarestream.com%2F961fcee29f97ec6a93beb891483261ec%2Fthumbnails%2Fthumbnail.jpg%3Ftime%3D%26height%3D600"
+  }
+];
+
+let current = 0;
+
+function renderModules() {
+  document.getElementById('modulesGrid').innerHTML = modules.map((m, i) => `
+    <div class="module-card" onclick="showLesson(${i})">
+      <div class="module-top">
+        <span class="module-num">Episode ${m.num}</span>
+        <span class="module-duration">${m.duration}</span>
+      </div>
+      <div class="module-title">${m.title}</div>
+      <div class="module-desc">${m.desc}</div>
+      <button class="watch-btn">
+        Watch episode
+        <svg width="13" height="13" viewBox="0 0 13 13" fill="none">
+          <path d="M2 6.5h9M6.5 2l4.5 4.5L6.5 11" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </button>
+    </div>
+  `).join('');
+}
+
+function showLesson(index) {
+  current = index;
+  updateLesson();
+  document.getElementById('homePage').classList.remove('active');
+  document.getElementById('lessonPage').classList.add('active');
+  document.getElementById('navBack').style.display = 'flex';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function updateLesson() {
+  const m = modules[current];
+  document.getElementById('lessonEyebrow').textContent = `Episode ${m.num} · ${m.duration}`;
+  document.getElementById('lessonTitle').textContent = m.title;
+  document.getElementById('lessonDesc').textContent = m.desc;
+  document.getElementById('prevBtn').disabled = current === 0;
+
+  // Action items
+  const actionsBox = document.getElementById('lessonActions');
+  const actionsList = document.getElementById('lessonActionsList');
+  if (m.actions && m.actions.length) {
+    actionsList.innerHTML = m.actions.map(a => `<li>${a}</li>`).join('');
+    actionsBox.style.display = 'block';
+  } else {
+    actionsBox.style.display = 'none';
+  }
+
+  const nextBtn = document.getElementById('nextBtn');
+  const isLast = current === modules.length - 1;
+  nextBtn.disabled = false;
+  nextBtn.innerHTML = isLast
+    ? `That's a wrap <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M4.5 1.5L9 6.5l-4.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`
+    : `Next Episode <svg width="13" height="13" viewBox="0 0 13 13" fill="none"><path d="M4.5 1.5L9 6.5l-4.5 5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>`;
+
+  const wrap = document.getElementById('lessonVideoWrap');
+  wrap.innerHTML = `<iframe src="${m.video}" loading="lazy" allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture;" allowfullscreen></iframe>`;
+
+  const lp = document.getElementById('lessonPage');
+  lp.style.animation = 'none';
+  lp.offsetHeight;
+  lp.style.animation = '';
+}
+
+function navigateLesson(dir) {
+  const next = current + dir;
+  if (next >= 0 && next < modules.length) {
+    current = next;
+    updateLesson();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+}
+
+function showHome() {
+  document.getElementById('lessonPage').classList.remove('active');
+  document.getElementById('homePage').classList.add('active');
+  document.getElementById('navBack').style.display = 'none';
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+renderModules();
+</script>
+
+
+</body></html>
