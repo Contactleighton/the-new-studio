@@ -242,6 +242,33 @@
     }
 
     .submit-btn:hover { background: #9A7220; }
+    .submit-btn:disabled { opacity: 0.6; cursor: default; }
+
+    .clear-btn {
+      background: none;
+      border: none;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 12px;
+      font-weight: 400;
+      color: #A89880;
+      cursor: pointer;
+      margin-left: 24px;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      transition: color 0.2s;
+    }
+    .clear-btn:hover { color: var(--charcoal); }
+
+    .saved-indicator {
+      font-size: 11px;
+      font-weight: 400;
+      color: var(--gold);
+      letter-spacing: 0.08em;
+      opacity: 0;
+      transition: opacity 0.4s;
+      margin-left: 16px;
+      vertical-align: middle;
+    }
 
     @media (max-width: 600px) {
       .page { padding: 48px 24px 80px; }
@@ -402,17 +429,96 @@
 
   <!-- SUBMIT -->
   <div class="submit-wrap">
-    <button class="submit-btn" onclick="window.print()">Save / Print &rarr;</button>
+    <button class="submit-btn" id="downloadBtn">Download PDF &rarr;</button>
+    <button class="clear-btn" id="clearBtn">Clear all answers</button>
+    <span class="saved-indicator" id="savedIndicator">✓ Saved</span>
   </div>
 
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 <script>
-  // Auto-expand textareas
-  document.querySelectorAll('textarea.u-input').forEach(ta => {
-    ta.addEventListener('input', function() {
-      this.style.height = 'auto';
-      this.style.height = this.scrollHeight + 'px';
+  const STORAGE_KEY = 'tns-workbook-v1';
+
+  // Give every input/textarea a stable key based on its position
+  function getFields() {
+    return Array.from(document.querySelectorAll('input[type="text"], textarea'));
+  }
+
+  // Save all answers to localStorage
+  function saveAll() {
+    const data = {};
+    getFields().forEach((el, i) => { data[i] = el.value; });
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+  }
+
+  // Restore saved answers on page load
+  function restoreAll() {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return;
+    const data = JSON.parse(raw);
+    getFields().forEach((el, i) => {
+      if (data[i] !== undefined && data[i] !== '') {
+        el.value = data[i];
+        // Re-expand textareas
+        if (el.tagName === 'TEXTAREA') {
+          el.style.height = 'auto';
+          el.style.height = el.scrollHeight + 'px';
+        }
+      }
+    });
+  }
+
+  // Auto-save on every keystroke
+  getFields().forEach(el => {
+    el.addEventListener('input', function() {
+      // Expand textareas
+      if (this.tagName === 'TEXTAREA') {
+        this.style.height = 'auto';
+        this.style.height = this.scrollHeight + 'px';
+      }
+      saveAll();
+    });
+  });
+
+  // Restore on load
+  restoreAll();
+
+  // Show a subtle saved indicator
+  let saveTimer;
+  function showSaved() {
+    const indicator = document.getElementById('savedIndicator');
+    indicator.style.opacity = '1';
+    clearTimeout(saveTimer);
+    saveTimer = setTimeout(() => { indicator.style.opacity = '0'; }, 2000);
+  }
+  getFields().forEach(el => el.addEventListener('input', showSaved));
+
+  // Clear all answers
+  document.getElementById('clearBtn').addEventListener('click', function() {
+    if (!confirm('Clear all your answers? This can\'t be undone.')) return;
+    localStorage.removeItem(STORAGE_KEY);
+    getFields().forEach(el => { el.value = ''; });
+  });
+
+  // Download as PDF
+  document.getElementById('downloadBtn').addEventListener('click', function () {
+    const btn = this;
+    btn.textContent = 'Generating…';
+    btn.disabled = true;
+
+    const opt = {
+      margin:       [14, 14, 14, 14],
+      filename:     'producer-workbook-the-new-studio.pdf',
+      image:        { type: 'jpeg', quality: 0.98 },
+      html2canvas:  { scale: 2, useCORS: true, backgroundColor: '#F4EFE6' },
+      jsPDF:        { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      pagebreak:    { mode: ['avoid-all', 'css'] }
+    };
+
+    html2pdf().set(opt).from(document.querySelector('.page')).save().then(() => {
+      btn.textContent = 'Download PDF →';
+      btn.disabled = false;
     });
   });
 </script>
