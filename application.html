@@ -64,42 +64,44 @@
       line-height: 1.7;
     }
 
-    /* ── TWO-COLUMN GRID (basic info) ── */
-    .field-grid {
-      display: grid;
-      grid-template-columns: 220px 1fr;
-      margin: 32px 0;
-    }
-
-    .field-label {
-      font-size: 15px;
-      font-weight: 500;
-      color: var(--charcoal);
-      padding: 18px 0;
-      border-bottom: 1px solid #D8CFBE;
+    /* ── BASIC INFO FIELDS (stacked) ── */
+    .info-grid {
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      gap: 0;
+      margin: 8px 0 36px;
     }
 
-    .field-input-wrap {
+    .info-row {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      padding: 20px 0 12px;
       border-bottom: 1px solid #D8CFBE;
-      padding: 10px 0 10px 16px;
     }
 
-    .field-input-wrap input {
+    .info-label {
+      font-size: 10px;
+      font-weight: 500;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+    }
+
+    .info-input {
       width: 100%;
       background: transparent;
       border: none;
       outline: none;
       font-family: 'DM Sans', sans-serif;
-      font-size: 15px;
+      font-size: 16px;
       font-weight: 300;
       color: var(--charcoal);
-      padding: 6px 0;
+      padding: 4px 0;
       caret-color: var(--gold);
     }
 
-    .field-input-wrap input::placeholder { color: #B0A598; font-style: italic; }
+    .info-input::placeholder { color: #B8AD9F; font-style: italic; }
 
     /* ── SECTION HEADING ── */
     .section-heading {
@@ -153,16 +155,24 @@
     /* ── TEXTAREA ── */
     textarea.u-input {
       resize: none;
-      min-height: 100px;
+      min-height: 56px;
       overflow: hidden;
-      line-height: 1.7;
+      line-height: 1.8;
+      border: none;
+      border-top: 1px solid #C8BFB0;
       border-bottom: 1px solid #C8BFB0;
-      padding-top: 14px;
-      padding-bottom: 14px;
+      padding: 14px 4px;
+      background: rgba(255,255,255,0.25);
     }
 
-    textarea.u-input.tall { min-height: 140px; }
-    textarea.u-input.extra-tall { min-height: 180px; }
+    textarea.u-input:focus {
+      border-top-color: var(--gold);
+      border-bottom-color: var(--gold);
+      background: rgba(255,255,255,0.45);
+    }
+
+    textarea.u-input.tall { min-height: 100px; }
+    textarea.u-input.extra-tall { min-height: 140px; }
 
     /* ── SECTION DIVIDER ── */
     .section-rule {
@@ -252,24 +262,27 @@
   <!-- ── YOUR BASIC INFO ── -->
   <h2 class="section-heading">Your Basic Info</h2>
 
-  <div class="field-grid">
-    <div class="field-label">Name</div>
-    <div class="field-input-wrap"><input type="text" placeholder=""></div>
-
-    <div class="field-label">Email</div>
-    <div class="field-input-wrap"><input type="email" placeholder=""></div>
-
-    <div class="field-label">Phone</div>
-    <div class="field-input-wrap"><input type="tel" placeholder=""></div>
-
-    <div class="field-label">Instagram</div>
-    <div class="field-input-wrap"><input type="text" placeholder="@"></div>
-  </div>
-
-  <div class="q-block">
-    <div class="q-label">Other Socials</div>
-    <div class="q-title">Meta, YouTube, TikTok, etc.</div>
-    <textarea class="u-input" placeholder=""></textarea>
+  <div class="info-grid">
+    <div class="info-row">
+      <div class="info-label">Name</div>
+      <input class="info-input" type="text" placeholder="">
+    </div>
+    <div class="info-row">
+      <div class="info-label">Email</div>
+      <input class="info-input" type="email" placeholder="">
+    </div>
+    <div class="info-row">
+      <div class="info-label">Phone</div>
+      <input class="info-input" type="tel" placeholder="">
+    </div>
+    <div class="info-row">
+      <div class="info-label">Instagram</div>
+      <input class="info-input" type="text" placeholder="@">
+    </div>
+    <div class="info-row">
+      <div class="info-label">Other Socials — Meta, YouTube, TikTok, etc.</div>
+      <input class="info-input" type="text" placeholder="">
+    </div>
   </div>
 
   <hr class="gold-rule">
@@ -347,21 +360,27 @@
   <!-- ── NUMBERS AND METRICS ── -->
   <h2 class="section-heading">Numbers &amp; Metrics</h2>
 
-  <div class="field-grid">
-    <div class="field-label">Social posting</div>
-    <div class="field-input-wrap"><input type="text" placeholder="How often?"></div>
-
-    <div class="field-label">Monthly inquiries</div>
-    <div class="field-input-wrap"><input type="text" placeholder="Approx. number"></div>
-
-    <div class="field-label">Artists (last 12 mo.)</div>
-    <div class="field-input-wrap"><input type="text" placeholder="Approx. number"></div>
-
-    <div class="field-label">Production income (last 12 mo.)</div>
-    <div class="field-input-wrap"><input type="text" placeholder="$"></div>
-
-    <div class="field-label">Hours/week</div>
-    <div class="field-input-wrap"><input type="text" placeholder="In and on your business"></div>
+  <div class="info-grid" style="margin-bottom: 44px;">
+    <div class="info-row">
+      <div class="info-label">How often do you post on social media?</div>
+      <input class="info-input" type="text" placeholder="">
+    </div>
+    <div class="info-row">
+      <div class="info-label">Monthly inquiries (approx.)</div>
+      <input class="info-input" type="text" placeholder="">
+    </div>
+    <div class="info-row">
+      <div class="info-label">Artists worked with in last 12 months</div>
+      <input class="info-input" type="text" placeholder="">
+    </div>
+    <div class="info-row">
+      <div class="info-label">Total production income — last 12 months</div>
+      <input class="info-input" type="text" placeholder="$">
+    </div>
+    <div class="info-row">
+      <div class="info-label">Hours per week in and on your studio business</div>
+      <input class="info-input" type="text" placeholder="">
+    </div>
   </div>
 
   <div class="q-block">
@@ -438,7 +457,7 @@
   const STORAGE_KEY = 'tns-application-v1';
 
   function getFields() {
-    return Array.from(document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea'));
+    return Array.from(document.querySelectorAll('input[type="text"], input[type="email"], input[type="tel"], textarea, .info-input'));
   }
 
   function saveAll() {
